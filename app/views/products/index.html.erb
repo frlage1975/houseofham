@@ -1,0 +1,24 @@
+<h1>Admin: Products</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Base Price</th>
+      <th>Stock Quantity</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.description %></td>
+        <td><%= product.base_price %></td>
+        <td><%= product.stock_quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
