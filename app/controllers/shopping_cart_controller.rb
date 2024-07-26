@@ -21,6 +21,14 @@ class ShoppingCartController < ApplicationController
     @cart_products = Product.find(@cart.keys)
   end
 
+  def update
+    product_id = params[:product_id].to_s
+    quantity = params[:quantity].to_i
+    @cart[product_id] = quantity
+    save_cart
+    render json: { success: true }
+  end
+
   private
 
   def initialize_cart

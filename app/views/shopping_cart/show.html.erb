@@ -14,7 +14,9 @@
       <% @cart_products.each do |product| %>
         <tr>
           <td class="border px-4 py-2"><%= product.name %></td>
-          <td class="border px-4 py-2"><%= @cart[product.id.to_s] %></td>
+          <td class="border px-4 py-2">
+            <%= select_tag "quantities[#{product.id}]", options_for_select((1..10).map { |i| [i, i] }, @cart[product.id.to_s]), class: "border border-gray-300 p-2 rounded-md w-16", data: { product_id: product.id } %>
+          </td>
           <td class="border px-4 py-2">$<%= product.base_price * @cart[product.id.to_s] %></td>
           <td class="border px-4 py-2">
             <%= button_to 'Remove', remove_from_cart_path(product_id: product.id), method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
@@ -23,12 +25,12 @@
       <% end %>
     </tbody>
   </table>
-  <div class="text-right">
+  <div class="text-right mt-4">
     <%= link_to 'Continue Shopping', products_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
   </div>
 <% else %>
   <p class="text-center text-gray-600 mt-4">Your cart is empty.</p>
-  <div class="text-center">
+  <div class="text-center mt-4">
     <%= link_to 'Start Shopping', products_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
   </div>
 <% end %>
