@@ -44,6 +44,18 @@
           <span class="inline-block bg-yellow-200 text-yellow-800 text-sm px-2 py-1 rounded">Recently Updated</span>
         <% end %>
         <%= link_to 'View Details', product_path(product), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+        <% if session[:cart]&.key?(product.id.to_s) %>
+          <button class="bg-gray-500 text-white font-bold py-2 px-4 rounded mt-2 cursor-not-allowed" disabled>Added to Cart</button>
+        <% else %>
+          <%= form_with url: add_to_cart_path, method: :post, local: true, class: "inline-block" do |f| %>
+            <%= hidden_field_tag :product_id, product.id %>
+            <%= hidden_field_tag :category_id, params[:category_id] %>
+            <%= hidden_field_tag :on_sale, params[:on_sale] %>
+            <%= hidden_field_tag :recently_updated, params[:recently_updated] %>
+            <%= hidden_field_tag :search, params[:search] %>
+            <%= f.submit 'Add to Cart', class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2" %>
+          <% end %>
+        <% end %>
       </div>
     <% end %>
   </div>
