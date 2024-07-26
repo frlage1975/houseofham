@@ -8,6 +8,9 @@ Tax.destroy_all
 Province.destroy_all
 Product.destroy_all
 Category.destroy_all
+Role.destroy_all
+
+Role.create(id: 1, role_name: "Customer")
 
 # Create Canadian provinces and their tax rates
 provinces = {
@@ -57,7 +60,8 @@ categories.each do |category|
       description: Faker::Food.description,
       base_price: Faker::Commerce.price(range: 5.0..100.0),
       stock_quantity: Faker::Number.between(from: 10, to: 100),
-      category: category
+      category: category,
+      on_sale: false
     )
     puts "Created product: #{product.name} in category: #{category.name}"
 

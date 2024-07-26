@@ -1,24 +1,29 @@
 <header class="bg-gray-800 text-white">
   <div class="container mx-auto p-4 flex justify-between items-center">
     <div class="flex items-center">
-      <%= image_tag 'https://67congreso.sefh.es/img/lcdj-logo.jpeg', alt: 'House of Ham', class: 'h-8 w-8 mr-2 rounded-full' %>
+      <%= link_to root_path do %>
+        <%= image_tag 'https://67congreso.sefh.es/img/lcdj-logo.jpeg', alt: 'House of Ham', class: 'h-8 w-8 mr-2 rounded-full' %>
+      <% end %>
       <h1 class="text-xl font-bold">House of Ham</h1>
     </div>
     <nav>
       <ul class="flex space-x-4 items-center">
-        <li><%= link_to 'Home', root_path, class: 'hover:text-gray-400' %></li>
         <li><%= link_to 'Products', products_path, class: 'hover:text-gray-400' %></li>
-        <li class="relative">
-          <%= link_to shopping_cart_show_path, class: 'hover:text-gray-400' do %>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2 5h14M7 13l-4-8m0 0l-.4-2H1" />
-            </svg>
-            <% if @cart_item_count > 0 %>
-              <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"><%= @cart_item_count %></span>
-            <% end %>
+        <li><%= link_to shopping_cart_show_path, class: 'hover:text-gray-400 relative' do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2 5h14M7 13l-4-8m0 0l-.4-2H1" />
+          </svg>
+          <% if @cart_item_count > 0 %>
+            <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"><%= @cart_item_count %></span>
           <% end %>
-        </li>
+        <% end %></li>
+        <li><%= link_to check_in_path, class: 'hover:text-gray-400' do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12h2a2 2 0 010 4h-2m-4-4h2a2 2 0 110 4h-2m-4-4h2a2 2 0 010 4h-2m-4-4h2a2 2 0 110 4H4m16-6H4m16 4H4" />
+          </svg>
+        <% end %></li>
       </ul>
     </nav>
   </div>
 </header>
+

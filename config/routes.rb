@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'check_ins/new'
+  get 'check_ins/create'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -16,6 +18,9 @@ Rails.application.routes.draw do
   delete 'shopping_cart/remove', to: 'shopping_cart#remove', as: 'remove_from_cart'
   post 'shopping_cart/update', to: 'shopping_cart#update', as: 'update_cart'
   get 'shopping_cart/show', to: 'shopping_cart#show', as: 'shopping_cart_show'
+
+  get 'check_in', to: 'check_ins#new'
+  post 'check_in', to: 'check_ins#create'
 
   root 'products#index'
 end
