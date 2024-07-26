@@ -7,12 +7,13 @@ class Product < ApplicationRecord
   has_one_attached :image
 
   validates :name, :description, :base_price, :stock_quantity, :category_id, presence: true
+  validates :on_sale, inclusion: { in: [true, false] }
 
   def self.ransackable_associations(auth_object = nil)
     ["category", "image_attachment", "image_blob", "orders", "orders_products", "reviews"]
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["base_price", "category_id", "created_at", "description", "id", "id_value", "name", "stock_quantity", "updated_at"]
+    ["base_price", "category_id", "created_at", "description", "id", "id_value", "name", "stock_quantity", "updated_at", "on_sale"]
   end
 end

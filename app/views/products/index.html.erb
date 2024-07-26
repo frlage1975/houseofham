@@ -1,14 +1,52 @@
 <h1 class="text-3xl font-bold mb-6">Products</h1>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  <% @products.each do |product| %>
-    <div class="border rounded-lg p-4">
-      <% if product.image.attached? %>
-        <%= image_tag product.image, class: "w-full h-48 object-cover mb-4" %>
-      <% end %>
-      <h2 class="text-xl font-semibold mb-2"><%= link_to product.name, product_path(product) %></h2>
-      <p class="mb-2"><%= product.description %></p>
-      <p class="text-lg font-bold mb-2">$<%= product.base_price %></p>
-      <%= link_to 'View Details', product_path(product), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+
+<div class="mb-4">
+  <%= form_with url: products_path, method: :get, local: true, class: "flex items-center space-x-4" do |form| %>
+    <div>
+      <%= form.label :category_id, "Filter by Category", class: "mr-2 font-semibold" %>
+      <%= form.collection_select :category_id, Category.all, :id, :name, { include_blank: "All Categories", selected: params[:category_id] }, class: "border border-gray-300 p-2 rounded-md" %>
+    </div>
+    <div class="flex items-center">
+      <%= form.check_box :on_sale, { checked: params[:on_sale] == "1", class: "mr-2" }, "1", "0" %>
+      <%= form.label :on_sale, "On Sale", class: "font-semibold" %>
+    </div>
+    <div class="flex items-center">
+      <%= form.check_box :recently_updated, { checked: params[:recently_updated] == "1", class: "mr-2" }, "1", "0" %>
+      <%= form.label :recently_updated, "Recently Updated", class: "font-semibold" %>
+    </div>
+    <div>
+      <%= form.label :search, "Search", class: "mr-2 font-semibold" %>
+      <%= form.text_field :search, value: params[:search], class: "border border-gray-300 p-2 rounded-md" %>
+    </div>
+    <div>
+      <%= form.submit "Filter", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    </div>
+    <div>
+      <%= link_to "Clear Filters", products_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
     </div>
   <% end %>
 </div>
+
+<% if @products.any? %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @products.each do |product| %>
+      <div class="border rounded-lg p-4">
+        <% if product.image.attached? %>
+          <%= image_tag product.image, class: "w-full h-48 object-cover mb-4 rounded-lg" %>
+        <% end %>
+        <h2 class="text-xl font-semibold mb-2"><%= link_to product.name, product_path(product) %></h2>
+        <p class="mb-2"><%= product.description %></p>
+        <p class="text-lg font-bold mb-2">$<%= product.base_price %></p>
+        <% if product.on_sale %>
+          <span class="inline-block bg-green-200 text-green-800 text-sm px-2 py-1 rounded">On Sale</span>
+        <% end %>
+        <% if product.updated_at >= 3.days.ago %>
+          <span class="inline-block bg-yellow-200 text-yellow-800 text-sm px-2 py-1 rounded">Recently Updated</span>
+        <% end %>
+        <%= link_to 'View Details', product_path(product), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-center text-gray-600 mt-4">No products found matching your criteria.</p>
+<% end %>
