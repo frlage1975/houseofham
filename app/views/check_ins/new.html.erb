@@ -1,29 +1,50 @@
 <h1 class="text-3xl font-bold mb-6">Check In</h1>
 
-<%= form_with model: @user, url: check_in_path, local: true do |form| %>
+<%= form_with model: @user, url: check_in_path, local: true, data: { turbo: false } do |form| %>
   <div class="mb-4">
     <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
     <%= form.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <% if @user.errors[:name].any? %>
+      <div class="text-red-500 text-sm mt-1">
+        <%= @user.errors[:name].first %>
+      </div>
+    <% end %>
   </div>
   <div class="mb-4">
     <%= form.label :email, class: "block text-gray-700 text-sm font-bold mb-2" %>
     <%= form.email_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <% if @user.errors[:email].any? %>
+      <div class="text-red-500 text-sm mt-1">
+        <%= @user.errors[:email].first %>
+      </div>
+    <% end %>
   </div>
   <div class="mb-4">
     <%= form.label :address, class: "block text-gray-700 text-sm font-bold mb-2" %>
     <%= form.text_field :address, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <% if @user.errors[:address].any? %>
+      <div class="text-red-500 text-sm mt-1">
+        <%= @user.errors[:address].first %>
+      </div>
+    <% end %>
   </div>
   <div class="mb-4">
     <%= form.label :province_id, "Province", class: "block text-gray-700 text-sm font-bold mb-2" %>
     <%= form.collection_select :province_id, Province.all, :id, :name, { include_blank: "Select Province" }, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <% if @user.errors[:province_id].any? %>
+      <div class="text-red-500 text-sm mt-1">
+        <%= @user.errors[:province_id].first %>
+      </div>
+    <% end %>
   </div>
   <div class="mb-4">
     <%= form.label :password, class: "block text-gray-700 text-sm font-bold mb-2" %>
     <%= form.password_field :password, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
-  </div>
-  <div class="mb-4">
-    <%= form.label :password_confirmation, class: "block text-gray-700 text-sm font-bold mb-2" %>
-    <%= form.password_field :password_confirmation, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <% if @user.errors[:password].any? %>
+      <div class="text-red-500 text-sm mt-1">
+        <%= @user.errors[:password].first %>
+      </div>
+    <% end %>
   </div>
   <div class="text-center">
     <%= form.submit 'Register', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>

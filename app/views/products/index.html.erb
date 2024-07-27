@@ -30,14 +30,14 @@
 <% if @products.any? %>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <% @products.each do |product| %>
-      <div class="border rounded-lg p-4">
+      <div class="border rounded-lg p-4 flex flex-col">
         <% if product.image.attached? %>
           <%= image_tag product.image, class: "w-full h-48 object-cover mb-4 rounded-lg" %>
         <% end %>
         <h2 class="text-xl font-semibold mb-2"><%= link_to product.name, product_path(product) %></h2>
         <p class="mb-2"><%= product.description %></p>
         <p class="text-lg font-bold mb-2">$<%= product.base_price %></p>
-        <div class="flex space-x-2 justify-center mb-2">
+        <div class="flex space-x-2 justify-center mb-2 mt-auto">
           <% if product.on_sale %>
             <span class="inline-block bg-green-200 text-green-800 text-sm px-2 py-1 rounded">On Sale</span>
           <% end %>
@@ -45,7 +45,7 @@
             <span class="inline-block bg-yellow-200 text-yellow-800 text-sm px-2 py-1 rounded">Recently Updated</span>
           <% end %>
         </div>
-        <div class="flex space-x-2 justify-center">
+        <div class="flex space-x-2 justify-center mt-2">
           <%= link_to 'View Details', product_path(product), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
           <% if session[:cart]&.key?(product.id.to_s) %>
             <button class="bg-gray-500 text-white font-bold py-2 px-4 rounded cursor-not-allowed" disabled>Added to Cart</button>
