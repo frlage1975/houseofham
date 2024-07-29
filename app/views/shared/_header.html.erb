@@ -22,6 +22,15 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12h2a2 2 0 010 4h-2m-4-4h2a2 2 0 110 4h-2m-4-4h2a2 2 0 010 4h-2m-4-4h2a2 2 0 110 4H4m16-6H4m16 4H4" />
           </svg>
         <% end %></li>
+
+        <li><%= link_to new_session_path, class: 'hover:text-gray-400' do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        <% end %></li>
+        <% if logged_in? %>
+          <li><%= link_to 'Logout', session_path, method: :delete, class: 'hover:text-gray-400' %></li>
+        <% end %>
       </ul>
     </nav>
   </div>

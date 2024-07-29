@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+  get 'sessions/create'
+  get 'sessions/destroy'
   get 'check_ins/new'
   get 'check_ins/create'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
   resources :products, only: [:index, :show]
-  resources :users
+  resources :users, only: [:new, :create]
+  resource  :session, only: [:new, :create, :destroy]
   resources :roles
   resources :reviews
   resources :categories
