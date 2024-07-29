@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
-  get 'sessions/create'
-  get 'sessions/destroy'
+  # get 'sessions/new'
+  # get 'sessions/create'
+  # get 'sessions/destroy'
   get 'check_ins/new'
   get 'check_ins/create'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

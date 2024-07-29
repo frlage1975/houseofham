@@ -28,8 +28,15 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         <% end %></li>
+
         <% if logged_in? %>
-          <li><%= link_to 'Logout', session_path, method: :delete, class: 'hover:text-gray-400' %></li>
+          <li><%= link_to 'Logout', session_path, method: :delete, data: { turbo_method: :delete }, class: 'hover:text-gray-400' %></li>
+        <% else %>
+          <li><%= link_to new_session_path, class: 'hover:text-gray-400' do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          <% end %></li>
         <% end %>
       </ul>
     </nav>
