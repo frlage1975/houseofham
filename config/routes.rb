@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  # get 'sessions/new'
-  # get 'sessions/create'
-  # get 'sessions/destroy'
+  get 'static_pages/show'
+
   get 'check_ins/new'
   get 'check_ins/create'
 
@@ -26,6 +25,8 @@ Rails.application.routes.draw do
 
   get 'check_in', to: 'check_ins#new'
   post 'check_in', to: 'check_ins#create'
+
+  get 'about', to: 'static_pages#show', defaults: { id: 'about' }
 
   root 'products#index'
 end

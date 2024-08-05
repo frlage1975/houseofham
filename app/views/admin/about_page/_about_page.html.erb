@@ -1,0 +1,15 @@
+<%= form_with model: static_page, url: update_admin_about_page_path, method: :post, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :content %>
+    <%= f.text_area :content, class: 'form-control', rows: 10 %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit 'Update About Page', class: 'btn btn-primary' %>
+  </div>
+<% end %>
