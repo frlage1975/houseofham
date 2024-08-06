@@ -1,0 +1,56 @@
+<h1 class="text-3xl font-bold mb-6 text-center">Invoice</h1>
+
+<div class="max-w-2xl mx-auto mb-12">
+  <h2 class="text-xl font-semibold mb-2">Customer Information</h2>
+  <p><%= @user.name %></p>
+  <p><%= @user.address %></p>
+  <p><%= @user.province.name %></p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Order Summary</h2>
+  <table class="table-auto w-full mb-6">
+    <thead>
+      <tr class="border-b-2 border-gray-300">
+        <th class="px-4 py-2 text-left">Product</th>
+        <th class="px-4 py-2 text-right">Quantity</th>
+        <th class="px-4 py-2 text-right">Base Price</th>
+        <th class="px-4 py-2 text-right">Total Price</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      <% @cart_items.each_with_index do |(product, quantity), index| %>
+        <tr class="<%= index.even? ? 'bg-gray-200' : 'bg-white' %>">
+          <td class="px-4 py-2 text-left"><%= product.name %></td>
+          <td class="px-4 py-2 text-right"><%= quantity %></td>
+          <td class="px-4 py-2 text-right"><%= number_to_currency(product.base_price) %></td>
+          <td class="px-4 py-2 text-right"><%= number_to_currency(product.base_price * quantity) %></td>
+        </tr>
+      <% end %>
+      <% tax_index = @cart_items.size %>
+      <tr class="<%= tax_index.even? ? 'bg-gray-200' : 'bg-white' %>">
+        <td colspan="3" class="px-4 py-2 text-left font-semibold">Subtotal</td>
+        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@subtotal) %></td>
+      </tr>
+      <tr class="<%= (tax_index + 1).even? ? 'bg-gray-200' : 'bg-white' %>">
+        <td colspan="3" class="px-4 py-2 text-left font-semibold">PST (<%= @pst_rate_100 %>%)</td>
+        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@pst) %></td>
+      </tr>
+      <tr class="<%= (tax_index + 2).even? ? 'bg-gray-200' : 'bg-white' %>">
+        <td colspan="3" class="px-4 py-2 text-left font-semibold">GST (<%= @gst_rate_100 %>%)</td>
+        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@gst) %></td>
+      </tr>
+      <tr class="<%= (tax_index + 3).even? ? 'bg-gray-200' : 'bg-white' %>">
+        <td colspan="3" class="px-4 py-2 text-left font-semibold">HST (<%= @hst_rate_100 %>%)</td>
+        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@hst) %></td>
+      </tr>
+      <tr class="<%= (tax_index + 4).even? ? 'bg-gray-200' : 'bg-white' %>">
+        <td colspan="3" class="px-4 py-2 text-left font-semibold">Total</td>
+        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@total) %></td>
+      </tr>
+    </tbody>
+  </table>
+
+   <div class="flex justify-between">
+    <%= link_to 'Back to Products', products_path, class: 'bg-blue-500 text-white py-2 px-4 rounded' %>
+    <%= button_to 'Pay', '#', class: 'bg-green-500 text-white py-2 px-4 rounded' %>
+  </div>
+</div>

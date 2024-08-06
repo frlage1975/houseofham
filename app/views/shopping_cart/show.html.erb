@@ -3,30 +3,33 @@
 <% if @cart_products.any? %>
   <table class="table-auto w-full mb-6">
     <thead>
-      <tr>
-        <th class="px-4 py-2">Product</th>
-        <th class="px-4 py-2">Quantity</th>
-        <th class="px-4 py-2">Price</th>
-        <th class="px-4 py-2">Actions</th>
+      <tr class="border-b-2 border-gray-200">
+        <th class="px-4 py-2 text-left">Product</th>
+        <th class="px-4 py-2 text-right">Quantity</th>
+        <th class="px-4 py-2 text-right">Base Price</th>
+        <th class="px-4 py-2 text-right">Total Price</th>
+        <th class="px-4 py-2 text-right"></th>
       </tr>
     </thead>
-    <tbody>
-      <% @cart_products.each do |product| %>
-        <tr>
-          <td class="border px-4 py-2"><%= product.name %></td>
-          <td class="border px-4 py-2">
+    <tbody class="divide-y divide-gray-200">
+      <% @cart_products.each_with_index do |product, index| %>
+        <tr class="<%= index.even? ? 'bg-white' : 'bg-gray-200' %>">
+          <td class="px-4 py-2 text-left"><%= product.name %></td>
+          <td class="px-4 py-2 text-right">
             <%= select_tag "quantities[#{product.id}]", options_for_select((1..10).map { |i| [i, i] }, @cart[product.id.to_s]), class: "border border-gray-300 p-2 rounded-md w-16", data: { product_id: product.id } %>
           </td>
-          <td class="border px-4 py-2">$<%= product.base_price * @cart[product.id.to_s] %></td>
-          <td class="border px-4 py-2">
+          <td class="px-4 py-2 text-right"><%= number_to_currency(product.base_price) %></td>
+          <td class="px-4 py-2 text-right"><%= number_to_currency(product.base_price * @cart[product.id.to_s]) %></td>
+          <td class="px-4 py-2 text-right">
             <%= button_to 'Remove', remove_from_cart_path(product_id: product.id), method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <div class="text-right mt-4">
+  <div class="flex space-x-2 mb-4 mt-4">
     <%= link_to 'Continue Shopping', products_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= button_to 'Checkout', checkout_path, method: :post, class: 'bg-green-500 text-white py-2 px-4 rounded' %>
   </div>
 <% else %>
   <p class="text-center text-gray-600 mt-4">Your cart is empty.</p>

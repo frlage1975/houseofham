@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  post 'checkout', to: 'checkout#create', as: 'checkout'
+  get 'invoice', to: 'checkout#show', as: 'invoice'
+
+  get 'checkout/create'
   get 'static_pages/show'
 
   get 'check_ins/new'
@@ -23,6 +27,8 @@ Rails.application.routes.draw do
   delete 'shopping_cart/remove', to: 'shopping_cart#remove', as: 'remove_from_cart'
   post 'shopping_cart/update', to: 'shopping_cart#update', as: 'update_cart'
   get 'shopping_cart/show', to: 'shopping_cart#show', as: 'shopping_cart_show'
+
+
 
   get 'check_in', to: 'check_ins#new'
   post 'check_in', to: 'check_ins#create'
