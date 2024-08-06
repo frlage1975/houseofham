@@ -21,7 +21,30 @@ class CheckoutController < ApplicationController
     session[:hst] = session[:subtotal] * session[:hst_rate]
     session[:total] = session[:subtotal] + session[:pst] + session[:gst] + session[:hst]
 
-    redirect_to invoice_path
+    @amount = (session[:total] * 100).to_i # Amount in cents
+
+    if params[:stripeToken]
+      customer = Stripe::Customer.create(
+        email: @user.email,
+        source: params[:stripeToken]
+      )
+
+      charge = Stripe::Charge.create(
+        customer: customer.id,
+        amount: @amount,
+        description: 'Rails Stripe customer',
+        currency: 'usd'
+      )
+
+      if charge.paid
+        # Handle successful payment here
+        redirect_to invoice_path, notice: 'Payment successful!'
+      else
+        redirect_to invoice_path, alert: 'Payment failed.'
+      end
+    else
+      redirect_to invoice_path, alert: 'Payment could not be processed.'
+    end
   end
 
   def show
