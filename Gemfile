@@ -77,3 +77,5 @@ gem "activeadmin", "~> 3.2"
 gem "devise", "~> 4.9"
 
 gem "sassc-rails", "~> 2.1"
+
+gem "activeadmin_quill_editor"

@@ -349,4 +349,9 @@ ActiveAdmin.setup do |config|
   # You can switch to using Webpacker here.
   #
   # config.use_webpacker = true
+  #
+  # # Add this line to include QuillEditor
+  config.register_stylesheet 'https://cdn.quilljs.com/1.3.6/quill.snow.css'
+  config.register_javascript 'https://cdn.quilljs.com/1.3.6/quill.js'
+  config.register_javascript 'https://cdn.quilljs.com/1.3.6/quill.min.js'
 end

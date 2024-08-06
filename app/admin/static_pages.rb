@@ -4,7 +4,7 @@ ActiveAdmin.register StaticPage do
   form do |f|
     f.inputs do
       f.input :title
-      f.input :content
+      f.input :content, as: :quill_editor
       f.input :slug
     end
     f.actions

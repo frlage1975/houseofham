@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   post 'check_in', to: 'check_ins#create'
 
   get 'about', to: 'static_pages#show', defaults: { id: 'about' }
+  get 'contact', to: 'static_pages#show', defaults: { id: 'contact' }
 
   root 'products#index'
 end
