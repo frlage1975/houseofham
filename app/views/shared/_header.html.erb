@@ -8,7 +8,9 @@
     </div>
     <nav>
       <ul class="flex space-x-4 items-center">
-        <li><%= link_to 'Products', products_path, class: 'hover:text-gray-400' %></li>
+        <% Category.all.each do |category| %>
+          <li><%= link_to category.name, category_path(category), class: 'hover:text-gray-400' %></li>
+        <% end %>
         <li><%= link_to 'About', about_path, class: 'hover:text-gray-400' %></li>
         <li><%= link_to 'Contact', contact_path, class: 'hover:text-gray-400' %></li>
         <li><%= link_to shopping_cart_show_path, class: 'hover:text-gray-400 relative' do %>
