@@ -24,26 +24,48 @@ class CheckoutController < ApplicationController
     @amount = (session[:total] * 100).to_i # Amount in cents
 
     if params[:stripeToken]
-      customer = Stripe::Customer.create(
-        email: @user.email,
-        source: params[:stripeToken]
-      )
+      begin
+        customer = Stripe::Customer.create(
+          email: @user.email,
+          source: params[:stripeToken]
+        )
 
-      charge = Stripe::Charge.create(
-        customer: customer.id,
-        amount: @amount,
-        description: 'Rails Stripe customer',
-        currency: 'usd'
-      )
+        charge = Stripe::Charge.create(
+          customer: customer.id,
+          amount: @amount,
+          description: 'Rails Stripe customer',
+          currency: 'usd'
+        )
 
-      if charge.paid
-        # Handle successful payment here
-        redirect_to invoice_path, notice: 'Payment successful!'
-      else
-        redirect_to invoice_path, alert: 'Payment failed.'
+        if charge.paid
+          # Handle successful payment here
+          save_order
+          session[:cart] = {} # Clear the cart
+          redirect_to invoice_path, notice: 'Payment successful!'
+        else
+          redirect_to invoice_path, alert: 'Payment failed.'
+        end
+      rescue Stripe::CardError => e
+        # The card has been declined or other card-related errors
+        redirect_to invoice_path, alert: e.message
+      rescue Stripe::InvalidRequestError => e
+        # Invalid parameters were supplied to Stripe's API
+        redirect_to invoice_path, alert: e.message
+      rescue Stripe::AuthenticationError => e
+        # Authentication with Stripe's API failed
+        redirect_to invoice_path, alert: e.message
+      rescue Stripe::APIConnectionError => e
+        # Network communication with Stripe failed
+        redirect_to invoice_path, alert: e.message
+      rescue Stripe::StripeError => e
+        # Display a generic error message to the user
+        redirect_to invoice_path, alert: "Something went wrong with your payment. Please try again."
+      rescue StandardError => e
+        # Something else happened, completely unrelated to Stripe
+        redirect_to invoice_path, alert: e.message
       end
     else
-      redirect_to invoice_path, alert: 'Payment could not be processed.'
+      redirect_to invoice_path
     end
   end
 
@@ -69,6 +91,34 @@ class CheckoutController < ApplicationController
   end
 
   private
+
+  def save_order
+    order = Order.create(
+      user: @user,
+      total_price: session[:total],
+      status: 'completed',
+      pst: session[:pst],
+      gst: session[:gst],
+      hst: session[:hst],
+      pst_rate: session[:pst_rate],
+      gst_rate: session[:gst_rate],
+      hst_rate: session[:hst_rate]
+    )
+
+    puts "Order created: #{order.inspect}"
+
+    @cart_items.each do |product, quantity|
+      order_product = OrdersProduct.create(
+        order: order,
+        product: product,
+        quantity: quantity,
+        price: product.base_price
+      )
+
+      puts "Order Product created: #{order_product.inspect}"
+    end
+  end
+
 
   def require_login
     unless logged_in?

@@ -27,9 +27,10 @@
           </svg>
         <% end %></li>
 
-        
+       
 
         <% if logged_in? %>
+          <li><%= link_to 'My Orders', orders_path, class: 'hover:text-gray-400' %></li>
           <li><%= link_to 'Logout', session_path, method: :delete, data: { turbo_method: :delete }, class: 'hover:text-gray-400' %></li>
         <% else %>
           <li><%= link_to new_session_path, class: 'hover:text-gray-400' do %>

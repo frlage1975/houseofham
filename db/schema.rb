@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_05_225327) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_07_230805) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -78,20 +78,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_05_225327) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "pst"
+    t.decimal "gst"
+    t.decimal "hst"
+    t.decimal "pst_rate"
+    t.decimal "gst_rate"
+    t.decimal "hst_rate"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "orders_products", force: :cascade do |t|
     t.integer "order_id", null: false
     t.integer "product_id", null: false
-    t.integer "tax_id", null: false
     t.integer "quantity"
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_orders_products_on_order_id"
     t.index ["product_id"], name: "index_orders_products_on_product_id"
-    t.index ["tax_id"], name: "index_orders_products_on_tax_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -173,7 +177,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_05_225327) do
   add_foreign_key "orders", "users"
   add_foreign_key "orders_products", "orders"
   add_foreign_key "orders_products", "products"
-  add_foreign_key "orders_products", "taxes"
   add_foreign_key "products", "categories"
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"

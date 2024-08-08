@@ -1,0 +1,52 @@
+<h1 class="text-3xl font-bold mb-6 text-center">Order Details</h1>
+
+<div class="max-w-2xl mx-auto mb-6">
+  <h2 class="text-xl font-semibold mb-2">Customer Information</h2>
+  <p><%= @order.user.name %></p>
+  <p><%= @order.user.address %></p>
+  <p><%= @order.user.province.name %></p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Order Summary</h2>
+  <table class="table-auto w-full mb-6">
+    <thead>
+      <tr class="border-b-2 border-gray-300">
+        <th class="px-4 py-2 text-left">Product</th>
+        <th class="px-4 py-2 text-right">Quantity</th>
+        <th class="px-4 py-2 text-right">Base Price</th>
+        <th class="px-4 py-2 text-right">Total Price</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      <% @order.orders_products.each_with_index do |order_item, index| %>
+        <tr class="<%= index.even? ? 'bg-gray-200' : 'bg-white' %>">
+          <td class="px-4 py-2 text-left"><%= order_item.product.name %></td>
+          <td class="px-4 py-2 text-right"><%= order_item.quantity %></td>
+          <td class="px-4 py-2 text-right"><%= number_to_currency(order_item.price) %></td>
+          <td class="px-4 py-2 text-right"><%= number_to_currency(order_item.price * order_item.quantity) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="3" class="px-4 py-2 font-semibold">Subtotal</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@order.total_price - @order.pst - @order.gst - @order.hst) %></td>
+      </tr>
+      <tr>
+        <td colspan="3" class="px-4 py-2 font-semibold">PST (<%= number_to_percentage(@order.pst_rate * 100, precision: 1) %>)</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@order.pst) %></td>
+      </tr>
+      <tr>
+        <td colspan="3" class="px-4 py-2 font-semibold">GST (<%= number_to_percentage(@order.gst_rate * 100, precision: 1) %>)</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@order.gst) %></td>
+      </tr>
+      <tr>
+        <td colspan="3" class="px-4 py-2 font-semibold">HST (<%= number_to_percentage(@order.hst_rate * 100, precision: 1) %>)</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@order.hst) %></td>
+      </tr>
+      <tr>
+        <td colspan="3" class="px-4 py-2 font-semibold">Total</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@order.total_price) %></td>
+      </tr>
+    </tbody>
+  </table>
+
+    <%= link_to 'Back to Orders', orders_path, class: 'bg-blue-500 text-white py-2 px-4 rounded' %>
+</div>

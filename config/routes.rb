@@ -15,11 +15,11 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
   resource  :session, only: [:new, :create, :destroy]
   resources :categories, only: [:show]
+  resources :orders, only: [:index, :show]
   resources :roles
   resources :reviews
   resources :categories
   resources :provinces
-  resources :orders
   resources :orders_products
   resources :taxes
 
