@@ -50,4 +50,13 @@ Rails.application.routes.draw do
   get 'contact', to: 'static_pages#show', defaults: { id: 'contact' }
 
   root 'products#index'
+
+  # Custom route for marking orders as shipped
+  namespace :admin do
+    resources :orders do
+      member do
+        put :mark_as_shipped
+      end
+    end
+  end
 end

@@ -14,6 +14,14 @@ class User < ApplicationRecord
 
   before_create :set_default_role
 
+  def self.ransackable_associations(auth_object = nil)
+    ["orders", "province", "reviews", "role"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["address", "created_at", "email", "encrypted_password", "id", "id_value", "name", "password", "password_digest", "phone_number", "province_id", "remember_created_at", "reset_password_sent_at", "reset_password_token", "role_id", "updated_at"]
+  end
+
   private
 
   def set_default_role
