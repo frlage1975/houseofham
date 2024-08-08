@@ -1,6 +1,6 @@
-<h1 class="text-3xl font-bold mb-6 text-center">Invoice</h1>
+<h1 class="text-3xl font-bold mb-6 text-center">Order Payment</h1>
 
-<div class="max-w-2xl mx-auto mb-12">
+<div class="max-w-2xl mx-auto mb-6">
   <h2 class="text-xl font-semibold mb-2">Customer Information</h2>
   <p><%= @user.name %></p>
   <p><%= @user.address %></p>
@@ -17,42 +17,42 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">
-      <% @cart_items.each_with_index do |(product, quantity), index| %>
+      <% @order.orders_products.each_with_index do |order_item, index| %>
         <tr class="<%= index.even? ? 'bg-gray-200' : 'bg-white' %>">
-          <td class="px-4 py-2 text-left"><%= product.name %></td>
-          <td class="px-4 py-2 text-right"><%= quantity %></td>
-          <td class="px-4 py-2 text-right"><%= number_to_currency(product.base_price) %></td>
-          <td class="px-4 py-2 text-right"><%= number_to_currency(product.base_price * quantity) %></td>
+          <td class="px-4 py-2 text-left"><%= order_item.product.name %></td>
+          <td class="px-4 py-2 text-right"><%= order_item.quantity %></td>
+          <td class="px-4 py-2 text-right"><%= number_to_currency(order_item.price) %></td>
+          <td class="px-4 py-2 text-right"><%= number_to_currency(order_item.price * order_item.quantity) %></td>
         </tr>
       <% end %>
-      <% tax_index = @cart_items.size %>
-      <tr class="<%= tax_index.even? ? 'bg-gray-200' : 'bg-white' %>">
-        <td colspan="3" class="px-4 py-2 text-left font-semibold">Subtotal</td>
-        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@subtotal) %></td>
+      <tr class="<%= 'bg-gray-200' %>">
+        <td colspan="3" class="px-4 py-2 font-semibold text-left">Subtotal</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@subtotal) %></td>
       </tr>
-      <tr class="<%= (tax_index + 1).even? ? 'bg-gray-200' : 'bg-white' %>">
-        <td colspan="3" class="px-4 py-2 text-left font-semibold">PST (<%= @pst_rate_100 %>%)</td>
-        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@pst) %></td>
+      <tr class="<%= 'bg-white' %>">
+        <td colspan="3" class="px-4 py-2 font-semibold text-left">PST (<%= @pst_rate_100 %>%)</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@pst) %></td>
       </tr>
-      <tr class="<%= (tax_index + 2).even? ? 'bg-gray-200' : 'bg-white' %>">
-        <td colspan="3" class="px-4 py-2 text-left font-semibold">GST (<%= @gst_rate_100 %>%)</td>
-        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@gst) %></td>
+      <tr class="<%= 'bg-gray-200' %>">
+        <td colspan="3" class="px-4 py-2 font-semibold text-left">GST (<%= @gst_rate_100 %>%)</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@gst) %></td>
       </tr>
-      <tr class="<%= (tax_index + 3).even? ? 'bg-gray-200' : 'bg-white' %>">
-        <td colspan="3" class="px-4 py-2 text-left font-semibold">HST (<%= @hst_rate_100 %>%)</td>
-        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@hst) %></td>
+      <tr class="<%= 'bg-white' %>">
+        <td colspan="3" class="px-4 py-2 font-semibold text-left">HST (<%= @hst_rate_100 %>%)</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@hst) %></td>
       </tr>
-      <tr class="<%= (tax_index + 4).even? ? 'bg-gray-200' : 'bg-white' %>">
-        <td colspan="3" class="px-4 py-2 text-left font-semibold">Total</td>
-        <td class="px-4 py-2 text-right font-semibold"><%= number_to_currency(@total) %></td>
+      <tr class="<%= 'bg-gray-200' %>">
+        <td colspan="3" class="px-4 py-2 font-semibold text-left">Total</td>
+        <td class="px-4 py-2 text-right"><%= number_to_currency(@total) %></td>
       </tr>
     </tbody>
   </table>
 
-   <div class="text-center">
-    <%= link_to 'Back to Products', products_path, class: 'bg-blue-500 text-white py-2 px-4 rounded' %>
-    </div>
-  <%= form_tag checkout_path, method: :post, id: 'payment-form' do %>
+  <div class="my-4 text-center">
+    <%= link_to 'Back to Orders', orders_path, class: 'bg-blue-500 text-white py-2 px-4 rounded' %>
+  </div>
+  <%= form_tag create_payment_path, method: :post, id: 'payment-form' do %>
+  <%= hidden_field_tag :id, @order.id %>
     <div class="form-row">
       <label for="card-element">
         Credit or debit card
@@ -65,10 +65,9 @@
       <div id="card-errors" role="alert"></div>
     </div>
 
-    <div class="flex text-center">
+    <div class="flex justify-between">
       <%= submit_tag 'Pay', class: 'bg-green-500 text-white py-2 px-4 rounded' %>
     </div>
-      <%= button_to 'Buy Later', buy_later_checkout_path(@order), method: :post, class: 'bg-yellow-500 text-white py-2 px-4 rounded mt-4' %>
   <% end %>
 </div>
 

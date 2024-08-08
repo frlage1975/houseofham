@@ -4,10 +4,13 @@ require 'faker'
 require 'open-uri'
 
 # Clear existing records
-Tax.destroy_all
-Province.destroy_all
+OrdersProduct.destroy_all
+Order.destroy_all
 Product.destroy_all
 Category.destroy_all
+Tax.destroy_all
+User.destroy_all
+Province.destroy_all
 Role.destroy_all
 
 Role.create(id: 1, role_name: "Customer")

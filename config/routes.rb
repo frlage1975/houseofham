@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   get 'check_ins/new'
   get 'check_ins/create'
 
+  post 'checkout/buy_later', to: 'checkout#buy_later', as: 'buy_later_checkout'
+  get 'checkout/pay_now/:id', to: 'checkout#pay_now', as: 'pay_now_checkout'
+  post 'checkout/create_payment', to: 'checkout#create_payment', as: 'create_payment'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -23,6 +27,8 @@ Rails.application.routes.draw do
   resources :orders do
     member do
       post 'pay', to: 'checkout#pay'
+      #get 'pay_now', to: 'checkout#pay_now'
+      #post 'create_payment', to: 'checkout#create_payment'
     end
   end
   resources :roles
