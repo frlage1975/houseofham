@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+  get 'sessions/create'
+  get 'sessions/destroy'
+
   post 'checkout', to: 'checkout#create', as: 'checkout'
   get 'invoice', to: 'checkout#show', as: 'invoice'
 
@@ -15,7 +19,12 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
   resource  :session, only: [:new, :create, :destroy]
   resources :categories, only: [:show]
-  resources :orders, only: [:index, :show]
+  # resources :orders, only: [:index, :show]
+  resources :orders do
+    member do
+      post 'pay', to: 'checkout#pay'
+    end
+  end
   resources :roles
   resources :reviews
   resources :categories
@@ -27,8 +36,6 @@ Rails.application.routes.draw do
   delete 'shopping_cart/remove', to: 'shopping_cart#remove', as: 'remove_from_cart'
   post 'shopping_cart/update', to: 'shopping_cart#update', as: 'update_cart'
   get 'shopping_cart/show', to: 'shopping_cart#show', as: 'shopping_cart_show'
-
-
 
   get 'check_in', to: 'check_ins#new'
   post 'check_in', to: 'check_ins#create'

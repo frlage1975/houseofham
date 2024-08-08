@@ -41,7 +41,7 @@ class CheckoutController < ApplicationController
           # Handle successful payment here
           save_order
           session[:cart] = {} # Clear the cart
-          redirect_to invoice_path, notice: 'Payment successful!'
+          redirect_to orders_path, notice: 'Payment successful!'
         else
           redirect_to invoice_path, alert: 'Payment failed.'
         end
