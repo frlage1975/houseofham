@@ -1,10 +1,10 @@
 <h1 class="text-3xl font-bold mb-6">Products</h1>
 
 <div class="mb-4">
-  <%= form_with url: products_path, method: :get, local: true, class: "flex items-center space-x-4" do |form| %>
-    <div>
-      <%= form.label :category_id, "Filter by Category", class: "mr-2 font-semibold" %>
-      <%= form.collection_select :category_id, Category.all, :id, :name, { include_blank: "All Categories", selected: params[:category_id] }, class: "border border-gray-300 p-2 rounded-md" %>
+  <%= form_with url: products_path, method: :get, local: true, class: "grid gap-4 sm:flex sm:flex-wrap items-center space-y-4 sm:space-y-0 sm:space-x-4" do |form| %>
+    <div class="flex flex-col sm:flex-row sm:items-center">
+      <%= form.label :category_id, "Filter by Category", class: "mr-2 font-semibold mb-1 sm:mb-0" %>
+      <%= form.collection_select :category_id, Category.all, :id, :name, { include_blank: "All Categories", selected: params[:category_id] }, class: "border border-gray-300 p-2 rounded-md w-full sm:w-auto" %>
     </div>
     <div class="flex items-center">
       <%= form.check_box :on_sale, { checked: params[:on_sale] == "1", class: "mr-2" }, "1", "0" %>
@@ -14,18 +14,19 @@
       <%= form.check_box :recently_updated, { checked: params[:recently_updated] == "1", class: "mr-2" }, "1", "0" %>
       <%= form.label :recently_updated, "Recently Updated", class: "font-semibold" %>
     </div>
-    <div>
-      <%= form.label :search, "Search", class: "mr-2 font-semibold" %>
-      <%= form.text_field :search, value: params[:search], class: "border border-gray-300 p-2 rounded-md" %>
+    <div class="flex flex-col sm:flex-row sm:items-center">
+      <%= form.label :search, "Search", class: "mr-2 font-semibold mb-1 sm:mb-0" %>
+      <%= form.text_field :search, value: params[:search], class: "border border-gray-300 p-2 rounded-md w-full sm:w-auto" %>
     </div>
-    <div>
-      <%= form.submit "Filter", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <div class="flex flex-col sm:flex-row sm:items-center">
+      <%= form.submit "Filter", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto mb-2 sm:mb-0" %>
     </div>
-    <div>
-      <%= link_to "Clear Filters", products_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
+    <div class="flex flex-col sm:flex-row sm:items-center">
+      <%= link_to "Clear Filters", products_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto" %>
     </div>
   <% end %>
 </div>
+
 
 <% if @products.any? %>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
