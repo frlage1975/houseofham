@@ -12,4 +12,5 @@ class Order < ApplicationRecord
   end
 
   validates :total_price, :status, :pst, :gst, :hst, :pst_rate, :gst_rate, :hst_rate, presence: true
+  validates :total_price, :status, :pst, :gst, :hst, :pst_rate, :gst_rate, :hst_rate, numericality: true
 end

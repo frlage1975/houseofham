@@ -8,6 +8,7 @@ class Product < ApplicationRecord
 
   validates :name, :description, :base_price, :stock_quantity, :category_id, presence: true
   validates :on_sale, inclusion: { in: [true, false] }
+  validates :base_price, :stock_quantity, numericality: true
 
   def self.ransackable_associations(auth_object = nil)
     ["category", "image_attachment", "image_blob", "orders", "orders_products", "reviews"]
