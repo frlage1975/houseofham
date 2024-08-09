@@ -1,5 +1,24 @@
 <h1 class="text-3xl font-bold mb-6 text-center"><%= @static_page.title %></h1>
-<div class="prose mx-auto">
+<div class="prose mx-auto mb-6">
   <%= @static_page.content.html_safe %>
-</div>
 
+  <% if @static_page.title == 'Contact Us' %>
+    <p>Fill out the form below, and we'll get back to you shortly.</p>
+
+    <form action="#" method="post" class="mt-6">
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+        <input type="text" id="name" name="name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="email" name="email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+      </div>
+      <div class="mb-4">
+        <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+        <textarea id="message" name="message" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required></textarea>
+      </div>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Send Message</button>
+    </form>
+  <% end %>
+</div>
