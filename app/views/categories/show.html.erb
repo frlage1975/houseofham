@@ -17,7 +17,7 @@
           <span class="inline-block bg-yellow-200 text-yellow-800 text-sm px-2 py-1 rounded">Recently Updated</span>
         <% end %>
       </div>
-      <div class="flex text-center mt-4">
+      <div class="flex space-x-2 justify-center mt-4">
         <%= link_to 'View Details', product_path(product), class: 'bg-blue-500 text-white py-2 px-4 rounded text-center mr-2' %>
         <% if session[:cart]&.key?(product.id.to_s) %>
             <button class="bg-gray-500 text-white font-bold py-2 px-4 rounded cursor-not-allowed" disabled>Added to Cart</button>
