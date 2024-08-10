@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all
+    # @products = Product.all
+    @products = Product.page(params[:page]).per(9)
     @products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
     @products = @products.where(on_sale: true) if params[:on_sale] == "1"
     @products = @products.where('updated_at >= ?', 3.days.ago) if params[:recently_updated] == "1"

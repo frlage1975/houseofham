@@ -66,3 +66,7 @@
 <% else %>
   <p class="text-center text-gray-600 mt-4">No products found matching your criteria.</p>
 <% end %>
+
+<div class="pagination mb-6">
+  <%= paginate @products %>
+</div>
