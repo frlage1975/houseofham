@@ -5,11 +5,19 @@ ActiveAdmin.register Order do
     selectable_column
     id_column
     column :user
-    column :total_price
+    column "Total Price" do |order|
+      number_to_currency(order.total_price, unit: "$", precision: 2)
+    end
     column :status
-    column :pst
-    column :gst
-    column :hst
+    column "Pst" do |order|
+      number_to_currency(order.pst, unit: "$", precision: 2)
+    end
+    column "Gst" do |order|
+      number_to_currency(order.gst, unit: "$", precision: 2)
+    end
+    column "Hst" do |order|
+      number_to_currency(order.hst, unit: "$", precision: 2)
+    end
     column :created_at
     column :updated_at
     actions
@@ -39,11 +47,19 @@ ActiveAdmin.register Order do
   show do
     attributes_table do
       row :user
-      row :total_price
+      row :total_price do |order|
+        number_to_currency(order.total_price, unit: "$", precision: 2)
+      end
       row :status
-      row :pst
-      row :gst
-      row :hst
+      row :pst do |order|
+        number_to_currency(order.pst, unit: "$", precision: 2)
+      end
+      row :gst do |order|
+        number_to_currency(order.gst, unit: "$", precision: 2)
+      end
+      row :hst do |order|
+        number_to_currency(order.hst, unit: "$", precision: 2)
+      end
       row :pst_rate
       row :gst_rate
       row :hst_rate
