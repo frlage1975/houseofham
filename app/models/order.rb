@@ -12,5 +12,6 @@ class Order < ApplicationRecord
   end
 
   validates :total_price, :status, :pst, :gst, :hst, :pst_rate, :gst_rate, :hst_rate, presence: true
-  validates :total_price, :pst, :gst, :hst, :pst_rate, :gst_rate, :hst_rate, numericality: true
+  validates :total_price, :pst, :gst, :hst, :pst_rate, :gst_rate, :hst_rate, numericality:  {greater_than_or_equal_to: 0}
+  validates :status, inclusion: { in: %w[new paid shipped] }
 end

@@ -38,7 +38,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2 5h14M7 13l-4-8m0 0l-.4-2H1" />
           </svg>
           <% if @cart_item_count > 0 %>
-            <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"><%= @cart_item_count %></span>
+            <span class="absolute top-0 left-4 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"><%= @cart_item_count %></span>
           <% end %>
         <% end %></li>
       </ul>
