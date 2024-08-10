@@ -7,7 +7,6 @@ ActiveAdmin.register User do
     column :name
     column :email
     column :address
-    column :phone_number
     column("Role") { |user| user.role.role_name }
     column :province
     actions

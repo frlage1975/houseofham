@@ -19,9 +19,21 @@
         <% Category.all.each do |category| %>
           <li><%= link_to category.name, category_path(category), class: 'hover:text-gray-400' %></li>
         <% end %>
+        <li class="mx-8">|</li>
         <li><%= link_to 'About', about_path, class: 'hover:text-gray-400' %></li>
         <li><%= link_to 'Contact', contact_path, class: 'hover:text-gray-400' %></li>
-        <li><%= link_to shopping_cart_show_path, class: 'hover:text-gray-400 relative' do %>
+        <li class="mx-8">|</li>
+        <% if logged_in? %>
+          <li><%= link_to 'My Orders', orders_path, class: 'hover:text-gray-400' %></li>
+          <li class="mx-8">|</li>
+          <li class="font-semibold">Welcome, <%= current_user.name %>!</li>
+          <li><%= link_to 'Logout', session_path, method: :delete, data: { turbo_method: :delete }, class: 'hover:text-gray-400' %></li>
+        <% else %>
+          <li><%= link_to 'Check-In', check_in_path, class: 'hover:text-gray-400' %></li>
+          <li><%= link_to 'Login', new_session_path, class: 'hover:text-gray-400' %></li>
+        <% end %>
+          <li class="mx-8">|</li>
+          <li><%= link_to shopping_cart_show_path, class: 'hover:text-gray-400 relative' do %>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2 5h14M7 13l-4-8m0 0l-.4-2H1" />
           </svg>
@@ -29,21 +41,6 @@
             <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"><%= @cart_item_count %></span>
           <% end %>
         <% end %></li>
-        <li><%= link_to check_in_path, class: 'hover:text-gray-400' do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12h2a2 2 0 010 4h-2m-4-4h2a2 2 0 110 4h-2m-4-4h2a2 2 0 010 4h-2m-4-4h2a2 2 0 110 4H4m16-6H4m16 4H4" />
-          </svg>
-        <% end %></li>
-        <% if logged_in? %>
-          <li><%= link_to 'My Orders', orders_path, class: 'hover:text-gray-400' %></li>
-          <li><%= link_to 'Logout', session_path, method: :delete, data: { turbo_method: :delete }, class: 'hover:text-gray-400' %></li>
-        <% else %>
-          <li><%= link_to new_session_path, class: 'hover:text-gray-400' do %>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          <% end %></li>
-        <% end %>
       </ul>
     </nav>
   </div>
@@ -64,20 +61,13 @@
           <span class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"><%= @cart_item_count %></span>
         <% end %>
       <% end %></li>
-      <li><%= link_to check_in_path, class: 'hover:text-gray-400' do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12h2a2 2 0 010 4h-2m-4-4h2a2 2 0 110 4h-2m-4-4h2a2 2 0 010 4h-2m-4-4h2a2 2 0 110 4H4m16-6H4m16 4H4" />
-        </svg>
-      <% end %></li>
+      
       <% if logged_in? %>
         <li><%= link_to 'My Orders', orders_path, class: 'hover:text-gray-400' %></li>
         <li><%= link_to 'Logout', session_path, method: :delete, data: { turbo_method: :delete }, class: 'hover:text-gray-400' %></li>
       <% else %>
-        <li><%= link_to new_session_path, class: 'hover:text-gray-400' do %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        <% end %></li>
+        <li><%= link_to 'Login', new_session_path, class: 'hover:text-gray-400' %></li>
+        <li><%= link_to 'Check-In', check_in_path, class: 'hover:text-gray-400' %></li>
       <% end %>
     </ul>
   </nav>

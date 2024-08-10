@@ -14,7 +14,8 @@ class ShoppingCartController < ApplicationController
     product_id = params[:product_id].to_s
     session[:cart] ||= {}
     session[:cart][product_id] = (session[:cart][product_id] || 0) + 1
-    redirect_to product_path(product_id), notice: 'Product added to cart!'
+    redirect_back(fallback_location: root_path, notice: 'Product added to cart!')
+    # redirect_to product_path(product_id), notice: 'Product added to cart!'
   end
 
   def remove
