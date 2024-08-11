@@ -1,7 +1,6 @@
 class OrdersProduct < ApplicationRecord
   belongs_to :order
   belongs_to :product
-  #belongs_to :tax
 
   validates :quantity, :price, presence: true
   validates :quantity, :price, numericality: true

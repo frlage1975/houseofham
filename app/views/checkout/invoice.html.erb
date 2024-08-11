@@ -68,8 +68,8 @@
     <div class="flex text-center">
       <%= submit_tag 'Pay', class: 'bg-green-500 text-white py-2 px-4 rounded' %>
     </div>
-      <%= button_to 'Buy Later', buy_later_checkout_path(@order), method: :post, class: 'bg-yellow-500 text-white py-2 px-4 rounded mt-4' %>
   <% end %>
+  <%= button_to 'Buy Later', buy_later_checkout_path(@order), method: :post, class: 'bg-yellow-500 text-white py-2 px-4 rounded mt-4' %>
 </div>
 
 <script src="https://js.stripe.com/v3/"></script>
